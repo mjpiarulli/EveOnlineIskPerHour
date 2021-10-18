@@ -4,12 +4,12 @@
     <div class="col-3"></div>
     <div class="mb-3 col-6">
         <EditForm EditContext="EditContext" OnSubmit="UpdateStats">
-            <div class="row">
+            <div class="row mb-3">
                 <InputTextArea id="wallet-log" name="wallet-log" class="form-control" @bind-Value="WalletLog" />
                 <ValidationMessage For="() => WalletLog" />
             </div>
             <div class="row">
-                <button type="button" id="refresh-isk-per-hour" name="refresh-isk-per-hour" class="btn btn-success" @onclick="UpdateStats">Refresh</button>
+                <button type="button" id="refresh-isk-per-hour" name="refresh-isk-per-hour" class="btn btn-success" @onclick="UpdateStats">Refresh</button>    
             </div>            
         </EditForm>        
     </div>
@@ -30,7 +30,10 @@
 
 <div class="row">
     <div class="mb-3 col-4">
-        <LineChart @ref="lineChart" TItem="double" />
+        <LineChart @ref="iskPerHourLineChart" TItem="double" />
+    </div>
+    <div class="mb-3 col-4">
+        <PieChart @ref="iskRewardTypePieChart" TItem="double" />
     </div>
 </div>
 

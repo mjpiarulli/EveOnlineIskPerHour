@@ -71,7 +71,8 @@ namespace EveOnlineIskPerHour.Pages
             WalletLogCalculationResult = WalletLogCalculator.CalculateStats(walletLogs);
         }        
 
-        LineChart<double> lineChart;
+        LineChart<double> iskPerHourLineChart;
+        PieChart<double> iskRewardTypePieChart;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -83,17 +84,20 @@ namespace EveOnlineIskPerHour.Pages
 
         async Task HandleRedraw()
         {
-            if (lineChart == null)
+            if (iskPerHourLineChart == null || iskRewardTypePieChart == null)
                 return;
 
-            await lineChart.Clear();
+            await iskPerHourLineChart.Clear();
+            await iskRewardTypePieChart.Clear();
 
-            var labels = WalletLogs == null ? Array.Empty<string>() : WalletLogCalculator.GetSiteTimeStamps(WalletLogs);
+            var iskPerHourLineChartLabels = WalletLogs == null ? Array.Empty<string>() : WalletLogCalculator.GetSiteTimeStamps(WalletLogs);
+            await iskPerHourLineChart.AddLabelsDatasetsAndUpdate(iskPerHourLineChartLabels, GetIskPerHourLineChartDataset());
 
-            await lineChart.AddLabelsDatasetsAndUpdate(labels, GetLineChartDataset());
+            var iskRewardTypePieChartLabels = WalletLogs == null ? Array.Empty<string>() : WalletLogCalculator.GetIskRewardTypes(WalletLogs);
+            await iskRewardTypePieChart.AddLabelsDatasetsAndUpdate(iskRewardTypePieChartLabels, GetIskRewardTypePieChartDataset());
         }
 
-        LineChartDataset<double> GetLineChartDataset()
+        LineChartDataset<double> GetIskPerHourLineChartDataset()
         {
             var data = WalletLogs == null ? new List<double>() : WalletLogCalculator.GetSiteTimeDurationsInMinutes(WalletLogs);
 
@@ -102,12 +106,22 @@ namespace EveOnlineIskPerHour.Pages
                 Label = "Site Times",
                 Data = data,
                 BackgroundColor = backgroundColors,
-                BorderColor = borderColors,
-                Fill = true,
-                PointRadius = 2,
-                BorderDash = new List<int> { }
+                BorderColor = borderColors                
             };
-        }       
+        }
+
+        PieChartDataset<double> GetIskRewardTypePieChartDataset()
+        {
+            var data = WalletLogs == null ? new List<double>() : WalletLogCalculator.GetIskRewardAmounts(WalletLogs);
+
+            return new PieChartDataset<double>
+            {
+                Label = "Reward Types",
+                Data = data,
+                BackgroundColor = backgroundColors,
+                BorderColor = borderColors,                
+            };
+        }
         
     }
 }

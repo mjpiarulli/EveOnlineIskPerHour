@@ -24,8 +24,8 @@ namespace EveOnlineIskPerHour.WalletLog
             DateTime startDate = DateTime.MaxValue;
             DateTime endDate = DateTime.MinValue;
 
-            int totalIsk = 0;
-            var firstPayment = 0;
+            var totalIsk = 0.0;
+            var firstPayment = 0.0;
 
             foreach (var walletLog in walletLogs) 
             {
@@ -52,7 +52,7 @@ namespace EveOnlineIskPerHour.WalletLog
             return iskPerHour;                
         }
 
-        public static int CalculateTotalIncome(IEnumerable<WalletLog> walletLogs)
+        public static double CalculateTotalIncome(IEnumerable<WalletLog> walletLogs)
         {
             var total = walletLogs
                 .Where(wl => wl.Isk > 0 && wl.Date != walletLogs.Min(wl2 => wl2.Date))
@@ -258,6 +258,23 @@ namespace EveOnlineIskPerHour.WalletLog
             siteTimeStamps.Reverse();
 
             return siteTimeStamps.ToArray();
+        }
+
+        public static string[] GetIskRewardTypes(IEnumerable<WalletLog> walletLogs)
+        {
+            return walletLogs
+                .Select(wl => wl.IskPayoutType)
+                .Distinct()
+                .OrderBy(s => s)
+                .ToArray();
+        }
+
+        public static List<double> GetIskRewardAmounts(IEnumerable<WalletLog> walletLogs)
+        {
+            return walletLogs.GroupBy(wl => wl.IskPayoutType)
+                .OrderBy(group => group.Key)
+                .Select(group => group.Sum(item => item.Isk))
+                .ToList();
         }
     }
 }

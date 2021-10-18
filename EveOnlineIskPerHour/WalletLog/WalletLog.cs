@@ -2,5 +2,5 @@
 
 namespace EveOnlineIskPerHour.WalletLog
 {
-    public record WalletLog(DateTime Date, string IskPayoutType, int Isk, int TotalIsk, string Reason);
+    public record WalletLog(DateTime Date, string IskPayoutType, double Isk, double TotalIsk, string Reason);
 }

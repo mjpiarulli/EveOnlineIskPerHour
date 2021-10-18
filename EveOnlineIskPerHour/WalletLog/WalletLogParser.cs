@@ -30,12 +30,12 @@ namespace EveOnlineIskPerHour.WalletLog
             var dateSuccess = DateTime.TryParse(split[0].Trim(), out date);
             
             var iskRewardType = split[1].Trim();
-            
-            int isk;
-            var iskSuccess = int.TryParse(split[2].Trim().Replace(",", string.Empty).Split(" ")[0], out isk);
 
-            int totalIsk;
-            var totalIskSuccess = int.TryParse(split[3].Trim().Replace(",", string.Empty).Split(" ")[0], out totalIsk);
+            double isk;
+            var iskSuccess = double.TryParse(split[2].Trim().Replace(",", string.Empty).Split(" ")[0], out isk);
+
+            double totalIsk;
+            var totalIskSuccess = double.TryParse(split[3].Trim().Replace(",", string.Empty).Split(" ")[0], out totalIsk);
 
             var reason = split[4].Trim();
 
