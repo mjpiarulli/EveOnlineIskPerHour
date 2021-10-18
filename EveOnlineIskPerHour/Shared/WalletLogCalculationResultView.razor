@@ -1,0 +1,25 @@
+﻿<div class="card">
+    <div class="card-header">
+        <b>Fleet Speed: </b> @ResultModel.IskPerHour.ToString("N0")
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <b>Total Income: </b> @ResultModel.TotalIncome.ToString("N0")
+        </li>
+        <li class="list-group-item">
+            <b>Total Time: </b> @($"{ResultModel.TotalTime:h\\h\\ m\\m}")
+        </li>
+        <li class="list-group-item">
+            <b>Best Site Time: </b> @($"{ResultModel.BestSiteTime:h\\h\\ m\\m}")
+        </li>
+        <li class="list-group-item">
+            <b>Average Site Time: </b> @($"{ResultModel.AverageSiteTime:h\\h\\ m\\m\\ ss\\s}")
+        </li>
+        <li class="list-group-item">
+            <b>Worst Site Time: </b> @($"{ResultModel.WorstSiteTime:h\\h\\ m\\m}")
+        </li>
+        <li class="list-group-item">
+            <b>Number of Measured Sites: </b> @ResultModel.MeasuredSites
+        </li>
+    </ul>
+</div>

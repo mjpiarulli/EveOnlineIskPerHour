@@ -1,0 +1,37 @@
+﻿@page "/"
+
+<div class="row">
+    <div class="col-3"></div>
+    <div class="mb-3 col-6">
+        <EditForm EditContext="EditContext" OnSubmit="UpdateStats">
+            <div class="row">
+                <InputTextArea id="wallet-log" name="wallet-log" class="form-control" @bind-Value="WalletLog" />
+                <ValidationMessage For="() => WalletLog" />
+            </div>
+            <div class="row">
+                <button type="button" id="refresh-isk-per-hour" name="refresh-isk-per-hour" class="btn btn-success" @onclick="UpdateStats">Refresh</button>
+            </div>            
+        </EditForm>        
+    </div>
+</div>
+
+<hr />
+
+@if (WalletLogCalculationResult != null)
+{
+<div class="row">
+    <div class="col-3"></div>
+    <div class="mb-3 col-6">
+        <WalletLogCalculationResultView ResultModel="@WalletLogCalculationResult" />
+    </div>
+</div>
+
+}
+
+<div class="row">
+    <div class="mb-3 col-4">
+        <LineChart @ref="lineChart" TItem="double" />
+    </div>
+</div>
+
+
